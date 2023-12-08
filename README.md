@@ -1,6 +1,6 @@
 ﻿## Locadora_LocaMais
 
-Esse e um Repositorio Criado para o Trabalho Interdiciplinar de AEDS/FES no qual sera desenvolvido um software para a locadora de veiculos LocaMais
+Esse e um Repositorio Criado para o Trabalho Interdiciplinar de AEDS I/FES no qual sera desenvolvido um software para a locadora de veiculos LocaMais
 
 ## Integrantes da equipe
 
