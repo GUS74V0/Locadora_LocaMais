@@ -5,7 +5,7 @@
      - *Descrição*: Implementar a funcionalidade que permite o cadastro de novos clientes no sistema. Critérios de Aceitação: Os clientes devem ter um código único, e as informações incluem nome, endereço e telefone.
    - *Caso de Sucesso*: Cadastrar um novo cliente com informações válidas.
    - *Casos de Teste*:
-     - Entrada: 2, Lucas, Rua Ernesto Austin, N/A
+     - Entrada: 2, Gabriel, Rua Ernesto Austin, 9999-9999
      - Saída Esperada: Novo cliente cadastrado com sucesso.
 
 ## 2. Cadastro de Veículos
