@@ -4,9 +4,9 @@ Esse e um Repositorio Criado para o Trabalho Interdiciplinar de AEDS I/FES no qu
 
 ## Integrantes da equipe
 
-*	Gabriel da Silveira Macedo Neto
-* Gustavo Rodrigo Campos Rodrigues
-* Pedro Pope Braga
+*	[Gabriel da Silveira Macedo Neto](https://github.com/gs10111)
+* [Gustavo Rodrigo Campos Rodrigues](https://github.com/GUS74V0)
+* [Pedro Pope Braga](https://github.com/bragxxa)
 
 ## Instruções de utilização
 
