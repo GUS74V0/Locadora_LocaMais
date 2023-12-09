@@ -1,6 +1,6 @@
 #include "cliente.h"
 #include <stdio.h>
-#include <string.h>
+#include <string.h> 
 
 #define MAX_CLIENTES 100
 #define CLIENTES_TXT "clientes.txt"
@@ -14,7 +14,7 @@ int clienteExiste(Cliente clientes[], int totalClientes, int codigo) {
     }
     return 0; 
 }
-
+ 
 int proximoCodigoCliente = 1;
 
 void codigoClientes(Cliente clientes[], int *totalClientes) {
@@ -106,7 +106,7 @@ int main() {
     Cliente clientes[MAX_CLIENTES];
     int totalClientes = 0;
 
-    // Carrega os clientes do arquivo (se houver)
+    // Carrega os clientes do arquivo (caso houver)
     carregarClientes(clientes, &totalClientes);
 
     int opcao;
