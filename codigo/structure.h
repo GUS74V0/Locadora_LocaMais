@@ -27,6 +27,7 @@ typedef struct
     float valorDiaria;
     int qtdOcupantes;
     char status[15];
+    int disponiveis ;
 } Veiculo;
 
 typedef struct

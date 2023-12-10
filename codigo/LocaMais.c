@@ -4,7 +4,7 @@ void cadastrarCliente();
 void cadastrarVeiculo();
 void cadastrarLocacao();
 
-//Codigo para Cliente
+// Codigo para Cliente
 
 void cadastrarCliente()
 {
@@ -21,7 +21,7 @@ void cadastrarCliente()
         return;
     }
 
-    printf("Digite o código do cliente: ");
+    printf("Digite o Codigo do cliente: ");
     scanf("%d", &cliente.codigo);
 
     while (fread(&clienteAux, sizeof(Cliente), 1, arquivo))
@@ -29,7 +29,7 @@ void cadastrarCliente()
         if (clienteAux.codigo == cliente.codigo)
         {
             existeCliente = 1;
-            printf("Cliente com este código já existe.\n");
+            printf("Cliente com este Codigo ja existe.\n");
             break;
         }
     }
@@ -37,9 +37,9 @@ void cadastrarCliente()
     if (!existeCliente)
     {
         printf("Nome do cliente: ");
-        scanf("%s", cliente.nome);
+        scanf(" %50[^\n]", cliente.nome);
         printf("Endereço: ");
-        scanf("%s", cliente.endereco);
+        scanf(" %100[^\n]", cliente.endereco);
         printf("Telefone: ");
         scanf("%s", cliente.telefone);
 
@@ -62,7 +62,7 @@ void pesquisarCliente()
         return;
     }
 
-    printf("Digite o código do cliente: ");
+    printf("Digite o Codigo do cliente: ");
     scanf("%d", &codigoCliente);
 
     while (fread(&cliente, sizeof(Cliente), 1, arquivo))
@@ -70,7 +70,7 @@ void pesquisarCliente()
         if (cliente.codigo == codigoCliente)
         {
             encontrado = 1;
-            printf("Código: %d\nNome: %s\nEndereço: %s\nTelefone: %s\n",
+            printf("Codigo: %d\nNome: %s\nEndereço: %s\nTelefone: %s\n",
                    cliente.codigo, cliente.nome, cliente.endereco, cliente.telefone);
             break;
         }
@@ -80,7 +80,7 @@ void pesquisarCliente()
 
     if (!encontrado)
     {
-        printf("Cliente não encontrado.\n");
+        printf("Cliente nao encontrado.\n");
     }
 }
 
@@ -97,7 +97,7 @@ void exibirLocacoesCliente()
         return;
     }
 
-    printf("Digite o código do cliente: ");
+    printf("Digite o Codigo do cliente: ");
     scanf("%d", &codigoCliente);
 
     while (fread(&locacao, sizeof(Locacao), 1, arquivo))
@@ -105,7 +105,7 @@ void exibirLocacoesCliente()
         if (locacao.codigoCliente == codigoCliente)
         {
             encontrouLocacao = 1;
-            printf("Código Locação: %d\nCódigo Veículo: %d\nData Retirada: %s\nData Devolução: %s\n",
+            printf("Codigo Locacao: %d\nCodigo Veiculo: %d\nData Retirada: %s\nData Devolucao: %s\n",
                    locacao.codigo, locacao.codigoVeiculo, locacao.dataRetirada, locacao.dataDevolucao);
         }
     }
@@ -114,11 +114,11 @@ void exibirLocacoesCliente()
 
     if (!encontrouLocacao)
     {
-        printf("Não foram encontradas locações para este cliente.\n");
+        printf("nao foram encontradas locacoees para este cliente.\n");
     }
 }
 
-//Codigo para Veiculos
+// Codigo para Veiculos
 
 void cadastrarVeiculo()
 {
@@ -132,7 +132,7 @@ void cadastrarVeiculo()
         return;
     }
 
-    printf("Digite o código do veículo: ");
+    printf("Digite o Codigo do Veiculo: ");
     scanf("%d", &veiculo.codigo);
 
     while (fread(&veiculoAux, sizeof(Veiculo), 1, arquivo))
@@ -140,14 +140,14 @@ void cadastrarVeiculo()
         if (veiculoAux.codigo == veiculo.codigo)
         {
             veiculoExiste = 1;
-            printf("Um veículo com este código já existe.\n");
+            printf("Um Veiculo com este Codigo ja existe.\n");
             break;
         }
     }
 
     if (!veiculoExiste)
     {
-        printf("Descrição: ");
+        printf("Descricao: ");
         scanf("%s", veiculo.descricao);
         printf("Modelo: ");
         scanf("%s", veiculo.modelo);
@@ -155,10 +155,12 @@ void cadastrarVeiculo()
         scanf("%s", veiculo.cor);
         printf("Placa: ");
         scanf("%s", veiculo.placa);
-        printf("Valor da diária: ");
+        printf("Valor da Diaria: ");
         scanf("%f", &veiculo.valorDiaria);
         printf("Quantidade de ocupantes: ");
         scanf("%d", &veiculo.qtdOcupantes);
+
+        strcpy(veiculo.status, "disponivel");
 
         fseek(arquivo, 0, SEEK_END);
         fwrite(&veiculo, sizeof(Veiculo), 1, arquivo);
@@ -180,7 +182,7 @@ void pesquisarVeiculo()
         return;
     }
 
-    printf("Digite o código do veículo: ");
+    printf("Digite o Codigo do Veiculo: ");
     scanf("%d", &codigoVeiculo);
 
     while (fread(&veiculo, sizeof(Veiculo), 1, arquivo))
@@ -188,7 +190,7 @@ void pesquisarVeiculo()
         if (veiculo.codigo == codigoVeiculo)
         {
             encontrado = 1;
-            printf("Código: %d\nDescrição: %s\nModelo: %s\nCor: %s\nPlaca: %s\nValor Diária: %.2f\nOcupantes: %d\n",
+            printf("Codigo: %d\nDescricao: %s\nModelo: %s\nCor: %s\nPlaca: %s\nValor Diaria: %.2f\nOcupantes: %d\n",
                    veiculo.codigo, veiculo.descricao, veiculo.modelo, veiculo.cor, veiculo.placa, veiculo.valorDiaria, veiculo.qtdOcupantes);
             break;
         }
@@ -198,11 +200,11 @@ void pesquisarVeiculo()
 
     if (!encontrado)
     {
-        printf("Veículo não encontrado.\n");
+        printf("Veiculo nao encontrado.\n");
     }
 }
 
-void relatorioVeiculosDisponiveis()
+void relatorioVeiculos()
 {
     Veiculo veiculo;
     int veiculosDisponiveis = 0;
@@ -214,12 +216,13 @@ void relatorioVeiculosDisponiveis()
         return;
     }
 
-    printf("Veículos disponíveis:\n");
+    printf("Veiculos disponiveis:\n");
+
     while (fread(&veiculo, sizeof(Veiculo), 1, arquivo))
     {
-        if (strcmp(veiculo.status, "disponível") == 0)
+        if (strcmp(veiculo.status, "disponivel") == 0)
         {
-            printf("Código: %d, Descrição: %s, Modelo: %s, Cor: %s, Placa: %s\n",
+            printf("Codigo: %d | Descricao: %s | Modelo: %s | Cor: %s | Placa: %s\n",
                    veiculo.codigo, veiculo.descricao, veiculo.modelo, veiculo.cor, veiculo.placa);
             veiculosDisponiveis++;
         }
@@ -227,13 +230,13 @@ void relatorioVeiculosDisponiveis()
 
     if (veiculosDisponiveis == 0)
     {
-        printf("Não há veículos disponíveis no momento.\n");
+        printf("Nao ha veiculos disponiveis no momento.\n");
     }
 
     fclose(arquivo);
 }
 
-//Codigo para Locaçao
+// Codigo para Locaçao
 
 void cadastrarLocacao()
 {
@@ -249,12 +252,12 @@ void cadastrarLocacao()
         return;
     }
 
-    printf("Digite o código da locação: ");
+    printf("Digite o codigo da locacao: ");
     scanf("%d", &locacao.codigo);
 
-    printf("Código do Cliente: ");
+    printf("Codigo do Cliente: ");
     scanf("%d", &locacao.codigoCliente);
-    printf("Código do Veículo: ");
+    printf("Codigo do Veiculo: ");
     scanf("%d", &locacao.codigoVeiculo);
 
     while (fread(&veiculoAux, sizeof(Veiculo), 1, arquivoVeiculo))
@@ -262,7 +265,7 @@ void cadastrarLocacao()
         if (veiculoAux.codigo == locacao.codigoVeiculo && strcmp(veiculoAux.status, "alugado") == 0)
         {
             veiculoDisponivel = 0;
-            printf("Veículo não disponível para locação.\n");
+            printf("Veiculo nao disponivel para locacao.\n");
             break;
         }
     }
@@ -271,9 +274,9 @@ void cadastrarLocacao()
     {
         printf("Data de Retirada (dd/mm/aaaa): ");
         scanf("%s", locacao.dataRetirada);
-        printf("Data de Devolução (dd/mm/aaaa): ");
+        printf("Data de Devolucao (dd/mm/aaaa): ");
         scanf("%s", locacao.dataDevolucao);
-        printf("Seguro (0 para não, 1 para sim): ");
+        printf("Seguro (0 para nao, 1 para sim): ");
         scanf("%d", &locacao.seguro);
         printf("Quantidade de dias: ");
         scanf("%d", &locacao.qtdDias);
@@ -311,7 +314,7 @@ void darBaixaLocacao()
         return;
     }
 
-    printf("Digite o código da locação para dar baixa: ");
+    printf("Digite o codigo da locacao para dar baixa: ");
     scanf("%d", &codigoLocacao);
 
     while (fread(&locacao, sizeof(Locacao), 1, arquivoLocacao))
@@ -335,7 +338,7 @@ void darBaixaLocacao()
                         if (veiculo.codigo == locacao.codigoVeiculo)
                         {
                             // Atualiza o status do veículo para "disponível"
-                            strcpy(veiculo.status, "disponível");
+                            strcpy(veiculo.status, "disponivel");
                             fseek(arquivoVeiculo, -sizeof(Veiculo), SEEK_CUR);
                             fwrite(&veiculo, sizeof(Veiculo), 1, arquivoVeiculo);
                             break;
@@ -346,7 +349,7 @@ void darBaixaLocacao()
                 }
             }
 
-            printf("Locação finalizada e veículo disponível novamente.\n");
+            printf("Locacao finalizada e veiculo disponivel novamente.\n");
             break;
         }
     }
@@ -369,7 +372,7 @@ void calcularValorTotal()
         return;
     }
 
-    printf("Digite o código da locação: ");
+    printf("Digite o codigo da locacao: ");
     scanf("%d", &codigoLocacao);
 
     while (fread(&locacao, sizeof(Locacao), 1, arquivo))
@@ -383,7 +386,7 @@ void calcularValorTotal()
 
             if (arquivoVeiculo == NULL)
             {
-                printf("Erro ao abrir o arquivo de veículos.\n");
+                printf("Erro ao abrir o arquivo de veiculos.\n");
                 fclose(arquivo);
                 return;
             }
@@ -414,11 +417,11 @@ void calcularValorTotal()
 
     if (encontrouLocacao)
     {
-        printf("Valor total da locação: R$ %.2f\n", valorTotal);
+        printf("Valor total da locacao: R$ %.2f\n", valorTotal);
     }
     else
     {
-        printf("Locação não encontrada.\n");
+        printf("Locacao nao encontrada.\n");
     }
 }
 
@@ -426,7 +429,7 @@ void calcularPontosFidelidade()
 {
     int codigoCliente;
     Locacao locacao;
-    int pontos = 0;
+    int pontos = 10;
     FILE *arquivo = fopen("locacoes.bin", "rb");
 
     if (arquivo == NULL)
@@ -435,14 +438,14 @@ void calcularPontosFidelidade()
         return;
     }
 
-    printf("Digite o código do cliente: ");
+    printf("Digite o codigo do cliente: ");
     scanf("%d", &codigoCliente);
 
     while (fread(&locacao, sizeof(Locacao), 1, arquivo))
     {
         if (locacao.codigoCliente == codigoCliente)
         {
-            pontos += locacao.qtdDias;
+            pontos *= locacao.qtdDias;
         }
     }
 
@@ -461,17 +464,17 @@ int main()
     {
         printf("\n--- LocaMais ---\n");
         printf("1. Cadastrar Cliente\n");
-        printf("2. Cadastrar Veículo\n");
-        printf("3. Cadastrar Locação\n");
-        printf("4. Dar Baixa em Locação\n");
-        printf("5. Calcular Valor Total da Locação\n");
+        printf("2. Cadastrar Veiculo\n");
+        printf("3. Cadastrar Locacao\n");
+        printf("4. Dar Baixa em Locacao\n");
+        printf("5. Calcular Valor Total da Locacao\n");
         printf("6. Pesquisar Cliente\n");
-        printf("7. Pesquisar Veículo\n");
-        printf("8. Exibir Locações de Cliente\n");
+        printf("7. Pesquisar Veiculo\n");
+        printf("8. Exibir Locacoes de Cliente\n");
         printf("9. Calcular Pontos de Fidelidade\n");
-        printf("10. Exibir Relatório de Veículos Disponíveis\n");
+        printf("10. Exibir Relatorio de Veiculos Disponiveis\n");
         printf("0. Sair\n");
-        printf("Escolha uma opção: ");
+        printf("Escolha uma opcao: ");
         scanf("%d", &opcao);
 
         switch (opcao)
@@ -504,13 +507,13 @@ int main()
             calcularPontosFidelidade();
             break;
         case 10:
-            relatorioVeiculosDisponiveis();
+            relatorioVeiculos();
             break;
         case 0:
             printf("Saindo do sistema...\n");
             break;
         default:
-            printf("Opção inválida!\n");
+            printf("Opção invalida!\n");
         }
     } while (opcao != 0);
 
