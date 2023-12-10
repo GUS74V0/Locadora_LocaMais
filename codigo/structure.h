@@ -8,6 +8,7 @@
 #ifndef ESTRUTURAS_H
 #define ESTRUTURAS_H
 
+// Definição das estruturas de dados
 typedef struct
 {
     int codigo;
