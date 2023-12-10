@@ -1,3 +1,11 @@
+/**
+ * 
+ * @file   main.c
+ * @brief  Arquivo com o codigo fonte do trabalho inter disciplinar de AEDS 1/FES.
+ * @authors Gabriel da Silveira - Gustavo Rodrigo - Pedro Braga
+ * @date   2023-12-07  a 2023-12-10
+ * 
+ */
 #include "structure.h"
 
 void cadastrarCliente();
