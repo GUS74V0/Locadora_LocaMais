@@ -24,59 +24,90 @@
      - Entrada: 1, 18/11/2023, 25/11/2023, Sim, 1, 1 
      - Saída Esperada: Locação registrada com sucesso.
 
-## 4. Baixa em Locação
-   - **Módulo:** `darBaixaLocacao`
-     - *Descrição*: Desenvolver a funcionalidade que permite dar baixa em uma locação, alterando o status do veículo e calculando o valor total da locação. Critérios de Aceitação: Deve ser possível calcular multa por atraso na devolução.
-   - *Caso de Sucesso*: Dar baixa em uma locação com informações válidas.
-   - *Casos de Teste*:
-     - Entrada: Informações válidas da locação e veículo.
-     - Saída Esperada: Locação encerrada com sucesso.
+## 4. Pesquisa de Cliente
 
-## 5. Pesquisa de Clientes
-   - **Módulo:** `buscarCliente`
-     - *Descrição*: Implementar a capacidade de buscar clientes pelo nome ou código. Critérios de Aceitação: A pesquisa deve retornar todas as informações relevantes do cliente.
-   - *Caso de Sucesso*: Encontrar as informações do cliente com o código especificado.
-   - *Casos de Teste*:
-     - Entrada: 1 (Código do cliente existente).
-     - Saída Esperada: Informações do cliente com o código 1.
+- **Módulo:** `pesquisarCliente`
+  - *Descrição*: Adicionar a capacidade de pesquisar um cliente pelo código.
+- *Caso de Sucesso*: Encontrar e exibir informações do cliente pelo código.
+- *Casos de Teste*:
+  - Entrada: Código existente de um cliente.
+  - Saída Esperada: Exibir informações do cliente.
 
-## 6. Pesquisa de Veículos
-   - **Módulo:** `buscarVeiculo`
-     - *Descrição*: Desenvolver a funcionalidade que permite buscar veículos pelo modelo, placa ou código. Critérios de Aceitação: A pesquisa deve retornar todas as informações relevantes do veículo.
-   - *Caso de Sucesso*: Encontrar as informações do veículo com o código especificado.
-   - *Casos de Teste*:
-     - Entrada: 1 (Código do veículo existente).
-     - Saída Esperada: Informações do veículo com o código 1.
+---
 
-## 7. Visualizar Locações de Cliente
-   - **Módulo:** `mostrarLocacoesCliente`
-     - *Descrição*: Criar a funcionalidade que exibe todas as locações de um cliente, com base no nome ou código do cliente. Critérios de Aceitação: A visualização deve incluir todas as informações relevantes das locações.
-   - *Caso de Sucesso*: Exibir corretamente todas as locações do cliente com base no nome ou código.
-   - *Casos de Teste*:
-     - Entrada: Lucas (Nome do cliente existente).
-     - Saída Esperada: Lista de locações do cliente Lucas.
+## 5. Pesquisa de Veículo
 
-## 8. Programa de Fidelidade
+- **Módulo:** `pesquisarVeiculo`
+  - *Descrição*: Desenvolver a funcionalidade de pesquisar um veículo pelo código.
+- *Caso de Sucesso*: Encontrar e exibir informações do veículo pelo código.
+- *Casos de Teste*:
+  - Entrada: Código existente de um veículo.
+  - Saída Esperada: Exibir informações do veículo.
+
+---
+
+## 6. Exibição de Locações de Cliente
+
+- **Módulo:** `exibirLocacoesCliente`
+  - *Descrição*: Implementar a funcionalidade de exibir todas as locações de um cliente pelo código.
+- *Caso de Sucesso*: Exibir as locações do cliente corretamente.
+- *Casos de Teste*:
+  - Entrada: Código existente de um cliente com locações.
+  - Saída Esperada: Exibir informações das locações do cliente.
+
+---
+
+## 7. Dar Baixa em Locação
+
+- **Módulo:** `darBaixaLocacao`
+  - *Descrição*: Adicionar a funcionalidade de dar baixa em uma locação pelo código.
+- *Caso de Sucesso*: Finalizar a locação e marcar o veículo como disponível.
+- *Casos de Teste*:
+  - Entrada: Código existente de uma locação.
+  - Saída Esperada: Locação finalizada e veículo disponível novamente.
+
+---
+
+## 8. Calcular Valor Total da Locação
+
+- **Módulo:** `calcularValorTotal`
+  - *Descrição*: Implementar a funcionalidade de calcular o valor total de uma locação com base nas diárias, valor da diária do veículo e seguro, se aplicável.
+- *Caso de Sucesso*: Calcular o valor total corretamente.
+- *Casos de Teste*:
+  - Entrada: Código existente de uma locação.
+  - Saída Esperada: Exibir o valor total da locação.
+
+---
+
+## 9. Calcular Pontos de Fidelidade
+
+- **Módulo:** `calcularPontosFidelidade`
+  - *Descrição*: Adicionar a capacidade de calcular os pontos de fidelidade de um cliente com base nas locações realizadas.
+- *Caso de Sucesso*: Calcular os pontos corretamente.
+- *Casos de Teste*:
+  - Entrada: Código existente de um cliente com locações.
+  - Saída Esperada: Exibir o total de pontos de fidelidade do cliente.
+
+---
+
+## 10. Premiação por Fidelidade
    - **Módulo:** `calcularPontosFidelidade`
-     - *Descrição*: Implementar o programa de fidelidade que calcula pontos para clientes com base na quantidade de dias de locação. Critérios de Aceitação: Os clientes ganham 10 pontos por dia de locação.
-   - *Caso de Sucesso*: Calcular corretamente os pontos de fidelidade de um cliente.
-   - *Casos de Teste*:
-     - Entrada: 1 (Código do cliente existente).
-     - Saída Esperada: Quantidade correta de pontos de fidelidade.
-
-## 9. Premiação por Fidelidade
-   - **Módulo:** `premiarPorFidelidade`
      - *Descrição*: Criar a funcionalidade que premia clientes com mais de 500 pontos no programa de fidelidade. Critérios de Aceitação: Os clientes premiados recebem um kit da LocaMais.
    - *Caso de Sucesso*: Premiar corretamente clientes com mais de 500 pontos.
    - *Casos de Teste*:
      - Entrada: Cliente com 600 pontos.
-     - Saída Esperada: Cliente premiado com um kit.
+     - Saída Esperada: Cliente premiado com um parabens.
+---
 
-## 10. Função Extra - Relatórios Gerenciais
-   - **Módulo:** `gerarRelatoriosGerenciais`
-     - *Descrição*: Implementar uma função extra que forneça relatórios gerenciais sobre as locações, clientes e veículos. Critérios de Aceitação: Os relatórios devem ser detalhados e fornecer informações úteis para a tomada de decisão.
-   - *Caso de Sucesso*: Gerar relatórios detalhados e úteis.
-   - *Casos de Teste*:
-     - Entrada: Dados válidos de locações, clientes e veículos.
-     - Saída Esperada: Relatórios gerenciais detalhados.
+## 11. Exibição de Relatório de Veículos Disponíveis
+
+- **Módulo:** `relatorioVeiculos`
+  - *Descrição*: Implementar a funcionalidade de exibir um relatório dos veículos disponíveis no momento.
+- *Caso de Sucesso*: Exibir o relatório corretamente.
+- *Casos de Teste*:
+  - Entrada: Sistema com veículos disponíveis.
+  - Saída Esperada: Exibir relatório de veículos disponíveis.
+
+---
+
 
