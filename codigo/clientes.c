@@ -1,160 +1,194 @@
-#include "cliente.h"
 #include <stdio.h>
-#include <string.h> 
+#include <stdlib.h>
+#include <string.h>
+#include <locale.h>
+#include "structure.h"
 
-#define MAX_CLIENTES 100
-#define CLIENTES_TXT "clientes.txt"
-#define ARQUIVO_CLIENTES "clientes.dat"
+void cadastrarCliente();
+void cadastrarVeiculo();
+void cadastrarLocacao();
+void darBaixaLocacao();
+void calcularValorTotal();
+void pesquisarCliente();
+void pesquisarVeiculo();
+void exibirLocacoesCliente();
+void calcularPontosFidelidade();
+void relatorioVeiculosDisponiveis();
 
-int clienteExiste(Cliente clientes[], int totalClientes, int codigo) {
-    for (int i = 0; i < totalClientes; i++) {
-        if (clientes[i].codigo == codigo) {
-            return 1; 
-        }
+void cadastrarCliente()
+{
+    Cliente cliente;
+    Cliente clienteAux;
+    int existeCliente = 0;
+    FILE *arquivo;
+
+    arquivo = fopen("clientes.bin", "ab+"); // Corrigido para ab+
+
+    if (arquivo == NULL)
+    {
+        printf("Erro ao abrir o arquivo.\n");
+        return;
     }
-    return 0; 
-}
- 
-int proximoCodigoCliente = 1;
 
-void codigoClientes(Cliente clientes[], int *totalClientes) {
-    FILE *arquivo = fopen(CLIENTES_TXT, "a");
-    if (arquivo != NULL) {
-        while (fread(&clientes[*totalClientes], sizeof(Cliente), 1, arquivo) == 1) {
-            (*totalClientes)++;
+    printf("Digite o código do cliente: ");
+    scanf("%d", &cliente.codigo);
 
-            // Atualiza o próximo código a ser atribuído
-            if (clientes[*totalClientes - 1].codigo >= proximoCodigoCliente) {
-                proximoCodigoCliente = clientes[*totalClientes - 1].codigo + 1;
-            }
-        }
-        fclose(arquivo);
-    }
-}
-
-void cadastrarCliente(Cliente clientes[], int *totalClientes) {
-    // Verifica se há espaço para mais clientes
-    if (*totalClientes < MAX_CLIENTES) {
-        Cliente novoCliente;
-
-        // Atribui automaticamente o próximo código do cliente
-        novoCliente.codigo = proximoCodigoCliente++;
-
-        printf("Digite o nome do cliente: ");
-        scanf("%s", novoCliente.nome);
-
-        // Limpando o buffer do teclado antes de ler o endereço
-        while (getchar() != '\n');
-
-        printf("Digite o endereço do cliente: ");
-        fgets(novoCliente.endereco, sizeof(novoCliente.endereco), stdin);
-        novoCliente.endereco[strcspn(novoCliente.endereco, "\n")] = '\0';  // Remover o caractere de nova linha
-
-        printf("Digite o telefone do cliente: ");
-        scanf("%s", novoCliente.telefone);
-
-        // Inicializa pontos de fidelidade
-        novoCliente.pontosFidelidade = 0;
-
-        // Adiciona o novo cliente 
-        clientes[*totalClientes] = novoCliente;
-        (*totalClientes)++;
-
-        // Grava os clientes no arquivo
-        FILE *arquivo = fopen(CLIENTES_TXT, "ab");
-        if (arquivo != NULL) {
-            fwrite(&novoCliente, sizeof(Cliente), 1, arquivo);
-            fclose(arquivo);
-        } else {
-            printf("Erro ao abrir o arquivo de clientes.\n");
-        }
-
-        printf("Cliente cadastrado! Código atribuído: %d\n", novoCliente.codigo);
-    } else {
-        printf("Sem espaço para novos clientes!\n");
-    }
-}
-
-void exibirDetalhesCliente(Cliente cliente) {
-    printf("Código: %d | Nome: %s | Endereço: %s | Telefone: %s | Pts Fidelidade: %d\n", cliente.codigo, cliente.nome, cliente.endereco, cliente.telefone, cliente.pontosFidelidade);
-}
-
-void carregarClientes(Cliente clientes[], int *totalClientes) {
-    FILE *arquivo = fopen(CLIENTES_TXT, "a");
-    if (arquivo != NULL) {
-        while (*totalClientes < MAX_CLIENTES && fread(&clientes[*totalClientes], sizeof(Cliente), 1, arquivo) == 1) {
-            (*totalClientes)++;
-        }
-        fclose(arquivo);
-    } else {
-        printf("Erro ao abrir o arquivo de clientes.\n");
-    }
-}
-
-
-void adicionarPontosFidelidade(Cliente clientes[], int totalClientes, int codigoCliente, int diasLocacao) {
-    for (int i = 0; i < totalClientes; i++) {
-        if (clientes[i].codigo == codigoCliente) {
-            clientes[i].pontosFidelidade += 10 * diasLocacao;
-            printf("Adicionados %d pontos de fidelidade ao cliente %s.\n", 10 * diasLocacao, clientes[i].nome);
+    while (fread(&clienteAux, sizeof(Cliente), 1, arquivo))
+    {
+        if (clienteAux.codigo == cliente.codigo)
+        {
+            existeCliente = 1;
+            printf("Cliente com este código já existe.\n");
             break;
         }
     }
+
+    if (!existeCliente)
+    {
+        printf("Nome do cliente: ");
+        scanf("%s", cliente.nome);
+        printf("Endereço: ");
+        scanf("%s", cliente.endereco);
+        printf("Telefone: ");
+        scanf("%s", cliente.telefone);
+
+        fwrite(&cliente, sizeof(Cliente), 1, arquivo);
+    }
+
+    fclose(arquivo); // Fecha o arquivo
 }
 
-int main() {
-    Cliente clientes[MAX_CLIENTES];
-    int totalClientes = 0;
+void pesquisarCliente()
+{
+    int codigoCliente;
+    Cliente cliente;
+    int encontrado = 0;
+    FILE *arquivo = fopen("clientes.bin", "rb");
 
-    // Carrega os clientes do arquivo (caso houver)
-    carregarClientes(clientes, &totalClientes);
+    if (arquivo == NULL)
+    {
+        printf("Erro ao abrir o arquivo.\n");
+        return;
+    }
+
+    printf("Digite o código do cliente: ");
+    scanf("%d", &codigoCliente);
+
+    while (fread(&cliente, sizeof(Cliente), 1, arquivo))
+    {
+        if (cliente.codigo == codigoCliente)
+        {
+            encontrado = 1;
+            printf("Código: %d\nNome: %s\nEndereço: %s\nTelefone: %s\n",
+                   cliente.codigo, cliente.nome, cliente.endereco, cliente.telefone);
+            break;
+        }
+    }
+
+    fclose(arquivo);
+
+    if (!encontrado)
+    {
+        printf("Cliente não encontrado.\n");
+    }
+}
+
+void exibirLocacoesCliente()
+{
+    int codigoCliente;
+    Locacao locacao;
+    int encontrouLocacao = 0;
+    FILE *arquivo = fopen("locacoes.bin", "rb");
+
+    if (arquivo == NULL)
+    {
+        printf("Erro ao abrir o arquivo.\n");
+        return;
+    }
+
+    printf("Digite o código do cliente: ");
+    scanf("%d", &codigoCliente);
+
+    while (fread(&locacao, sizeof(Locacao), 1, arquivo))
+    {
+        if (locacao.codigoCliente == codigoCliente)
+        {
+            encontrouLocacao = 1;
+            printf("Código Locação: %d\nCódigo Veículo: %d\nData Retirada: %s\nData Devolução: %s\n",
+                   locacao.codigo, locacao.codigoVeiculo, locacao.dataRetirada, locacao.dataDevolucao);
+        }
+    }
+
+    fclose(arquivo);
+
+    if (!encontrouLocacao)
+    {
+        printf("Não foram encontradas locações para este cliente.\n");
+    }
+}
+
+int main()
+{
+    setlocale(LC_ALL, "Portuguese");
 
     int opcao;
 
-    do {
-        // Exibe o menu
-        printf("\n### Menu ###\n");
+    do
+    {
+        printf("\n--- LocaMais ---\n");
         printf("1. Cadastrar Cliente\n");
-        printf("2. Exibir Detalhes de Cliente\n");
-        printf("3. Adicionar Pontos de Fidelidade\n");
-        printf("4. Sair\n");
+        printf("2. Cadastrar Veículo\n");
+        printf("3. Cadastrar Locação\n");
+        printf("4. Dar Baixa em Locação\n");
+        printf("5. Calcular Valor Total da Locação\n");
+        printf("6. Pesquisar Cliente\n");
+        printf("7. Pesquisar Veículo\n");
+        printf("8. Exibir Locações de Cliente\n");
+        printf("9. Calcular Pontos de Fidelidade\n");
+        printf("10. Exibir Relatório de Veículos Disponíveis\n");
+        printf("0. Sair\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
 
-        switch (opcao) {
-            case 1:
-                cadastrarCliente(clientes, &totalClientes);
-                break;
-            case 2:
-                if (totalClientes > 0) {
-                    int codigoCliente;
-                    printf("Digite o código do cliente: ");
-                    scanf("%d", &codigoCliente);
-                    exibirDetalhesCliente(clientes[codigoCliente - 1]);
-                } else {
-                    printf("Não há clientes cadastrados.\n");
-                }
-                break;
-            case 3:
-                if (totalClientes > 0) {
-                    int codigoCliente, diasLocacao;
-                    printf("Digite o código do cliente: ");
-                    scanf("%d", &codigoCliente);
-                    printf("Digite a quantidade de dias de locação: ");
-                    scanf("%d", &diasLocacao);
-                    adicionarPontosFidelidade(clientes, totalClientes, codigoCliente, diasLocacao);
-                } else {
-                    printf("Não há clientes cadastrados.\n");
-                }
-                break;
-            case 4:
-                printf("Saindo do programa.\n");
-                break;
-            default:
-                printf("Opção inválida. Tente novamente.\n");
+        switch (opcao)
+        {
+        case 1:
+            cadastrarCliente();
+            break;
+        case 2:
+            cadastrarVeiculo();
+            break;
+        case 3:
+            cadastrarLocacao();
+            break;
+        case 4:
+            darBaixaLocacao();
+            break;
+        case 5:
+            calcularValorTotal();
+            break;
+        case 6:
+            pesquisarCliente();
+            break;
+        case 7:
+            pesquisarVeiculo();
+            break;
+        case 8:
+            exibirLocacoesCliente();
+            break;
+        case 9:
+            calcularPontosFidelidade();
+            break;
+        case 10:
+            relatorioVeiculosDisponiveis();
+            break;
+        case 0:
+            printf("Saindo do sistema...\n");
+            break;
+        default:
+            printf("Opção inválida!\n");
         }
-
-    } while (opcao != 4);
+    } while (opcao != 0);
 
     return 0;
 }
