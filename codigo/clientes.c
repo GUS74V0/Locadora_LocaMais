@@ -5,15 +5,8 @@
 #include "structure.h"
 
 void cadastrarCliente();
-void cadastrarVeiculo();
-void cadastrarLocacao();
-void darBaixaLocacao();
-void calcularValorTotal();
 void pesquisarCliente();
-void pesquisarVeiculo();
 void exibirLocacoesCliente();
-void calcularPontosFidelidade();
-void relatorioVeiculosDisponiveis();
 
 void cadastrarCliente()
 {
@@ -137,15 +130,8 @@ int main()
     {
         printf("\n--- LocaMais ---\n");
         printf("1. Cadastrar Cliente\n");
-        printf("2. Cadastrar Veículo\n");
-        printf("3. Cadastrar Locação\n");
-        printf("4. Dar Baixa em Locação\n");
-        printf("5. Calcular Valor Total da Locação\n");
-        printf("6. Pesquisar Cliente\n");
-        printf("7. Pesquisar Veículo\n");
-        printf("8. Exibir Locações de Cliente\n");
-        printf("9. Calcular Pontos de Fidelidade\n");
-        printf("10. Exibir Relatório de Veículos Disponíveis\n");
+        printf("2. Pesquisar Cliente\n");
+        printf("3. Exibir Locações de Cliente\n");
         printf("0. Sair\n");
         printf("Escolha uma opção: ");
         scanf("%d", &opcao);
@@ -156,31 +142,10 @@ int main()
             cadastrarCliente();
             break;
         case 2:
-            cadastrarVeiculo();
-            break;
-        case 3:
-            cadastrarLocacao();
-            break;
-        case 4:
-            darBaixaLocacao();
-            break;
-        case 5:
-            calcularValorTotal();
-            break;
-        case 6:
             pesquisarCliente();
             break;
-        case 7:
-            pesquisarVeiculo();
-            break;
-        case 8:
+        case 3:
             exibirLocacoesCliente();
-            break;
-        case 9:
-            calcularPontosFidelidade();
-            break;
-        case 10:
-            relatorioVeiculosDisponiveis();
             break;
         case 0:
             printf("Saindo do sistema...\n");
