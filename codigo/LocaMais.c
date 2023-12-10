@@ -7,6 +7,130 @@
 
 #include "structure.h"
 
+void cadastrarCliente();
+void cadastrarVeiculo();
+void cadastrarLocacao();
+void darBaixaLocacao();
+void calcularValorTotal();
+void pesquisarCliente();
+void pesquisarVeiculo();
+void exibirLocacoesCliente();
+void calcularPontosFidelidade();
+void relatorioVeiculosDisponiveis();
+
+void cadastrarCliente()
+{
+    Cliente cliente;
+    Cliente clienteAux;
+    int existeCliente = 0;
+    FILE *arquivo;
+
+    arquivo = fopen("clientes.bin", "ab+"); // Corrigido para ab+
+
+    if (arquivo == NULL)
+    {
+        printf("Erro ao abrir o arquivo.\n");
+        return;
+    }
+
+    printf("Digite o código do cliente: ");
+    scanf("%d", &cliente.codigo);
+
+    while (fread(&clienteAux, sizeof(Cliente), 1, arquivo))
+    {
+        if (clienteAux.codigo == cliente.codigo)
+        {
+            existeCliente = 1;
+            printf("Cliente com este código já existe.\n");
+            break;
+        }
+    }
+
+    if (!existeCliente)
+    {
+        printf("Nome do cliente: ");
+        scanf("%s", cliente.nome);
+        printf("Endereço: ");
+        scanf("%s", cliente.endereco);
+        printf("Telefone: ");
+        scanf("%s", cliente.telefone);
+
+        fwrite(&cliente, sizeof(Cliente), 1, arquivo);
+    }
+
+    fclose(arquivo); // Fecha o arquivo
+}
+
+void pesquisarCliente()
+{
+    int codigoCliente;
+    Cliente cliente;
+    int encontrado = 0;
+    FILE *arquivo = fopen("clientes.bin", "rb");
+
+    if (arquivo == NULL)
+    {
+        printf("Erro ao abrir o arquivo.\n");
+        return;
+    }
+
+    printf("Digite o código do cliente: ");
+    scanf("%d", &codigoCliente);
+
+    while (fread(&cliente, sizeof(Cliente), 1, arquivo))
+    {
+        if (cliente.codigo == codigoCliente)
+        {
+            encontrado = 1;
+            printf("Código: %d\nNome: %s\nEndereço: %s\nTelefone: %s\n",
+                   cliente.codigo, cliente.nome, cliente.endereco, cliente.telefone);
+            break;
+        }
+    }
+
+    fclose(arquivo);
+
+    if (!encontrado)
+    {
+        printf("Cliente não encontrado.\n");
+    }
+}
+
+void exibirLocacoesCliente()
+{
+    int codigoCliente;
+    Locacao locacao;
+    int encontrouLocacao = 0;
+    FILE *arquivo = fopen("locacoes.bin", "rb");
+
+    if (arquivo == NULL)
+    {
+        printf("Erro ao abrir o arquivo.\n");
+        return;
+    }
+
+    printf("Digite o código do cliente: ");
+    scanf("%d", &codigoCliente);
+
+    while (fread(&locacao, sizeof(Locacao), 1, arquivo))
+    {
+        if (locacao.codigoCliente == codigoCliente)
+        {
+            encontrouLocacao = 1;
+            printf("Código Locação: %d\nCódigo Veículo: %d\nData Retirada: %s\nData Devolução: %s\n",
+                   locacao.codigo, locacao.codigoVeiculo, locacao.dataRetirada, locacao.dataDevolucao);
+        }
+    }
+
+    fclose(arquivo);
+
+    if (!encontrouLocacao)
+    {
+        printf("Não foram encontradas locações para este cliente.\n");
+    }
+}
+
+
 void cadastrarLocacao()
 {
     Locacao locacao;
