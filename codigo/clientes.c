@@ -1,7 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <locale.h>
+
 #include "structure.h"
 
 void cadastrarCliente();
@@ -15,7 +12,7 @@ void cadastrarCliente()
     int existeCliente = 0;
     FILE *arquivo;
 
-    arquivo = fopen("clientes.bin", "ab+"); // Corrigido para ab+
+    arquivo = fopen("clientes.bin", "ab+"); 
 
     if (arquivo == NULL)
     {
