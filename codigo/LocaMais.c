@@ -105,7 +105,7 @@ void exibirLocacoesCliente()
         if (locacao.codigoCliente == codigoCliente)
         {
             encontrouLocacao = 1;
-            printf("Codigo Locacao: %d\nCodigo Veiculo: %d\nData Retirada: %s\nData Devolucao: %s\n",
+            printf("Codigo Locacao: %d\n Codigo Veiculo: %d\n Data Retirada: %s\n Data Devolucao: %s\n",
                    locacao.codigo, locacao.codigoVeiculo, locacao.dataRetirada, locacao.dataDevolucao);
         }
     }
@@ -148,13 +148,13 @@ void cadastrarVeiculo()
     if (!veiculoExiste)
     {
         printf("Descricao: ");
-        scanf("%s", veiculo.descricao);
+        scanf(" %100[^\n]", veiculo.descricao);
         printf("Modelo: ");
-        scanf("%s", veiculo.modelo);
+        scanf(" %100[^\n]", veiculo.modelo);
         printf("Cor: ");
-        scanf("%s", veiculo.cor);
+        scanf(" %50[^\n]", veiculo.cor);
         printf("Placa: ");
-        scanf("%s", veiculo.placa);
+        scanf(" %50[^\n]", veiculo.placa);
         printf("Valor da Diaria: ");
         scanf("%f", &veiculo.valorDiaria);
         printf("Quantidade de ocupantes: ");
